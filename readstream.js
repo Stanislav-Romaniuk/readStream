@@ -1,7 +1,8 @@
 import { createReadStream } from 'node:fs';
 
 const stream = createReadStream('plrabn12.txt', {
-  encoding: 'utf8'
+  encoding: 'utf8',
+  highWaterMark: 100,
 });
 
 const symbolCounter = {}; 
@@ -16,8 +17,12 @@ stream.on('data', (chunk) => {
       symbolCounter[str[i]] = 1;
     }
   }
+});
 
-
+stream.on('end', () => {
   console.table(symbolCounter);
 });
 
+
+
+// Object.entries
